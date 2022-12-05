@@ -1,0 +1,34 @@
+#include "ifunc.h"
+#include <sys/auxv.h>
+#include <stdio.h>
+
+##
+        __attribute__(( ifunc("resolver") ));
+
+#sve2{
+
+                #fsve2
+}
+
+#sve{
+
+                #fsve
+}
+
+#asimd{
+
+                #fasimd
+}
+
+static void (*resolver(void)) {
+        long hwcaps = getauxval(AT_HWCAP);
+        long hwcaps2 = getauxval(AT_HWCAP2);
+
+        if (hwcaps2 & HWCAP2_SVE2){
+                return sve2;
+        } else if (hwcaps & HWCAP_SVE){
+                return sve;
+        } else {
+                return asimd;
+        }
+};
