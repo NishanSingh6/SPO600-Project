@@ -124,7 +124,7 @@ print("Does the function accepts parameters of user defined data type (struct or
 ch = input("<Y/N>: ")
 
 if ch.lower() == "y":
-    print("Enter the user defined data types seprated by ,  {Node, Record}")
+    print("Enter the user defined data types seprated by ,")
     u_dTypes = input(">")
     u_dTypes = u_dTypes.split(",")
 
@@ -172,4 +172,5 @@ print("Do you want to keep function files {function1.c, function2.c, function3.c
 ch = input("<Y/N>: ")
 if ch.lower() == "n":
     os.system("rm function?.c")
+
 
