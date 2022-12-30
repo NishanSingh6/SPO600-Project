@@ -6,18 +6,15 @@
         __attribute__(( ifunc("resolver") ));
 
 #sve2{
-
-                #fsve2
+#fsve2
 }
 
 #sve{
-
-                #fsve
+#fsve
 }
 
 #asimd{
-
-                #fasimd
+#fasimd
 }
 
 static void (*resolver(void)) {
