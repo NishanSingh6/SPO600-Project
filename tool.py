@@ -110,9 +110,15 @@ fnames = func_name.split(" ")
 func_name = fnames[1]
 
 ifunc_string = ifunc_string.replace("##", func_prototype.replace(";\n",""))
-ifunc_string = ifunc_string.replace('#sve2', func_prototype.replace(func_name, "*sve2").replace(";",""))
-ifunc_string = ifunc_string.replace('#sve', func_prototype.replace(func_name, "*sve").replace(";",""))
-ifunc_string = ifunc_string.replace('#asimd', func_prototype.replace(func_name, "*asimd").replace(";",""))
+ifunc_string1 = func_prototype.replace(func_name, "*sve2")
+ifunc_string1 = ifunc_string1[:len(ifunc_string1) - 1]
+ifunc_string = ifunc_string.replace('#sve2', ifunc_string1)
+ifunc_string2 = func_prototype.replace(func_name, "*sve")
+ifunc_string2 = ifunc_string2[:len(ifunc_string2) - 1]
+ifunc_string = ifunc_string.replace('#sve', ifunc_string2)
+ifunc_string3 = func_prototype.replace(func_name, "*asimd")
+ifunc_string3 = ifunc_string3[:len(ifunc_string3) - 1]
+ifunc_string = ifunc_string.replace('#asimd',ifunc_string3)
 
 # List of built in Datatypes - 
 dTypes = ["unsigned", "char", "int", "float", "double", "long", "short", "*", "signed", "wchar_t", "const", "&"]
