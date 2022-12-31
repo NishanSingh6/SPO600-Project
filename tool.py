@@ -87,7 +87,7 @@ f1_prototype = func_prototype.replace(func_name, func_name+"_asimd")
 f2_prototype = func_prototype.replace(func_name, func_name+"_sve")
 f3_prototype = func_prototype.replace(func_name, func_name+"_sve2")
 
-header_string = f1_prototype + '\n' + f2_prototype + '\n' + f3_prototype
+header_string = "#ifndef IFUNC_H\n#define IFUNC_H\n" + f3_prototype + '\n' + f2_prototype + '\n' + f1_prototype + "\n#endif\n"
 
 #writing ifunc.h
 header_file = open("ifunc.h", "w")
@@ -111,13 +111,13 @@ func_name = fnames[1]
 
 ifunc_string = ifunc_string.replace("##", func_prototype.replace(";\n",""))
 ifunc_string1 = func_prototype.replace(func_name, "*sve2")
-ifunc_string1 = ifunc_string1[:len(ifunc_string1) - 1]
+ifunc_string1 = ifunc_string1[:len(ifunc_string1) - 2]
 ifunc_string = ifunc_string.replace('#sve2', ifunc_string1)
 ifunc_string2 = func_prototype.replace(func_name, "*sve")
-ifunc_string2 = ifunc_string2[:len(ifunc_string2) - 1]
+ifunc_string2 = ifunc_string2[:len(ifunc_string2) - 2]
 ifunc_string = ifunc_string.replace('#sve', ifunc_string2)
 ifunc_string3 = func_prototype.replace(func_name, "*asimd")
-ifunc_string3 = ifunc_string3[:len(ifunc_string3) - 1]
+ifunc_string3 = ifunc_string3[:len(ifunc_string3) - 2]
 ifunc_string = ifunc_string.replace('#asimd',ifunc_string3)
 
 # List of built in Datatypes - 
@@ -141,9 +141,9 @@ for i in dTypes:
     f2_prototype = f2_prototype.replace(i, "")
     f3_prototype = f3_prototype.replace(i, "")
 
-ifunc_string = ifunc_string.replace("#fsve2", f3_prototype)
-ifunc_string = ifunc_string.replace("#fsve", f2_prototype)
-ifunc_string = ifunc_string.replace("#fasimd", f1_prototype)
+ifunc_string = ifunc_string.replace("#fsve2", f3_prototype[:len(f3_prototype)-1])
+ifunc_string = ifunc_string.replace("#fsve", f2_prototype[:len(f2_prototype) - 1])
+ifunc_string = ifunc_string.replace("#fasimd", f1_prototype[:len(f1_prototype) - 1])
 
 #writing ifunc.c file
 ifunc = open("ifunc.c", "w")
